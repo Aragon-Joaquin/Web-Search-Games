@@ -2,10 +2,19 @@ import e from "express";
 import { createServer } from "vite";
 import { magicStrings } from "./src/magicStrings.js";
 import { readFileSync } from "node:fs";
+import cors from "cors";
 
 // Create http server
 const app = e();
 
+// Handle cors and get resources
+const corsOptions = {
+  origin: true,
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+app.options("*", cors());
+app.use(cors());
 // Add Vite
 let vite;
 
@@ -16,9 +25,9 @@ vite = await createServer({
 app.use(vite.middlewares);
 
 // Serve HTML
-app.use("/", async (req, res) => {
+app.use("*", cors(corsOptions), async (req, res) => {
   try {
-    const url = req.originalUrl;
+    const url = req.originalUrl.replace("/", "");
 
     let template;
     let render;
