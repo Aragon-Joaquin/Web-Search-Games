@@ -3,6 +3,7 @@ const PORT = 5173;
 export const magicStrings = {
   PORT: PORT,
   LOCAL_URL: `http://localhost:${PORT}`,
+  COOKIE_NAME: "sessionCookie"
 };
 
 export const APIInfo = {
@@ -18,13 +19,16 @@ export const APIInfo = {
     platforms: "platforms",
     themes: "themes",
   },
+  SECONDARY_APICALLS : {
+    platform_logos: "platform_logos"
+  }
 };
 
 //todo: finish this
 function filtersToQuery(id) {
   const filterCall = {
     cover: `f url`,
-    age_ratings: `f rating,category; w (category=1 | category=2)&id=("${id}");`, //first category is ESRB, second is PEGI
+    age_ratings: `f rating,category; w category=1&id=("${id}");`, //first category is ESRB, second would be PEGI
     themes: `f name`,
   };
 }
