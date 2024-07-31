@@ -1,56 +1,66 @@
-import { createContext, useReducer, useState } from "react";
-import { useCookies } from "react-cookie";
-import { magicStrings } from "../magicStrings";
+import { createContext, useReducer } from 'react'
+import { useCookies } from 'react-cookie'
+import { magicStrings } from '../magicStrings'
+import { gameReducer, gamesActions, gamesInitialValues } from '../reducers/gameReducer'
 
-const {COOKIE_NAME} = magicStrings
+export const GamesContext = createContext()
 
-export const GamesContext = createContext();
+function useCookieProps() {
+	const { COOKIE_NAME } = magicStrings
+	const [allCookies, setSession] = useCookies([COOKIE_NAME])
 
-//todo: transform all this function in a all-in object.
-export function getSessionCookie({ allCookies }) {
-  let checkIfCookies = allCookies?.COOKIE_NAME;
+	const COOKIES_FUNCTIONS = {
+		getSessionCookie: function () {
+			const checkIfCookies = allCookies?.COOKIE_NAME
 
-  if (checkIfCookies == undefined) return false;
-  const { access_token } = checkIfCookies;
-  return access_token;
+			if (checkIfCookies == undefined) return false
+			const { access_token } = checkIfCookies
+			return access_token
+		},
+
+		setSessionCookies: function ({ expires_in = 0, ...args }) {
+			setSession(COOKIE_NAME, { args }, { maxAge: expires_in, secure: true, httpOnly: true, sameSite: true })
+		}
+	}
+
+	return COOKIES_FUNCTIONS
 }
 
-export function setSessionCookies({expires_in = 0,...args}){
-  setSessionCookie(
-    COOKIE_NAME,
-    { args },
-    { maxAge: expires_in, secure: true, httpOnly: true, sameSite: true }
-  );
-}
+function useGameReducer() {
+	const [state, dispatch] = useReducer(gameReducer, gamesInitialValues)
 
-const initialValues = {
-  games : [],
-  gamesRawData: []
-}
+	const setGames = (gamesState) =>
+		dispatch({
+			type: gamesActions.setGames,
+			payload: gamesState
+		})
 
-function gameReducer({state,action}){
-  
+	const setGamesRawData = (gamesState) =>
+		dispatch({
+			type: gamesActions.setGamesRawData,
+			payload: gamesState
+		})
+
+	return { state, setGames, setGamesRawData }
 }
 
 export function GameProvider({ children }) {
-  //todo: useReducer()
-  const [state, dispatch] = useReducer(gameReducer,)
-  const [allCookies, setSessionCookie] = useCookies([COOKIE_NAME]);
-  const [games, setGames] = useState([]);
-  const [gamesRawData, setGamesRawData] = useState([]);
-  return (
-    <GamesContext.Provider
-      value={{
-        games,
-        setGames,
-        gamesRawData,
-        setGamesRawData,
-        getSessionCookie,
-        setSessionCookies,
-        allCookies,
-      }}
-    >
-      {children}
-    </GamesContext.Provider>
-  );
+	const { getSessionCookie, setSessionCookies } = useCookieProps()
+	const { state: gamesState, setGames, setGamesRawData } = useGameReducer()
+
+	return (
+		<GamesContext.Provider
+			value={{
+				gamesState,
+				setGames,
+				setGamesRawData,
+
+				getSessionCookie,
+				setSessionCookies
+				// AllCookies
+			}}
+		>
+			{children}
+		</GamesContext.Provider>
+	)
 }
