@@ -10,12 +10,14 @@ const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
 const { FILTERS, APICALLS } = APIInfo
 
 export function SearchBar() {
-	const { games, setGames, gamesRawData, setGamesRawData, getSessionCookie } = useContext(GamesContext)
+	const { gamesState, setGames, gamesRawData, setGamesRawData, getSessionCookie } = useContext(GamesContext)
 
 	async function getGames(evt) {
 		evt.preventDefault()
+
 		const gameValue = evt.target[0].value
 		const access_token = getSessionCookie()
+		console.log('token: ', access_token)
 		if (gameValue === '' || !access_token) return
 
 		const searchParams = `
@@ -80,7 +82,7 @@ export function SearchBar() {
 				</div>
 			</section>
 
-			<ul>{games.length ? <GamesContainer results={games} /> : <></>}</ul>
+			<ul>{gamesState.length ? <GamesContainer results={gamesState} /> : <></>}</ul>
 		</>
 	)
 }

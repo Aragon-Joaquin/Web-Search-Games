@@ -13,11 +13,11 @@ export const gamesActions = {
 const STATE_ACTIONS = {
 	[gamesActions.setGames]: function (state, action) {
 		const { payload } = action
-		return { ...state, setGames: payload }
+		return { ...state, games: payload }
 	},
 	[gamesActions.setGamesRawData]: function (state, action) {
 		const { payload } = action
-		return { ...state, setGamesRawData: payload }
+		return { ...state, gamesRawData: payload }
 	}
 }
 

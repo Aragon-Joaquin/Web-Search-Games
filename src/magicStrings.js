@@ -3,7 +3,8 @@ const PORT = 5173
 export const magicStrings = {
 	PORT,
 	LOCAL_URL: `http://localhost:${PORT}`,
-	COOKIE_NAME: 'sessionCookie'
+	COOKIE_NAME: 'sessionCookie',
+	TOKEN_NAME: 'API_TOKEN'
 }
 
 export const APIInfo = {

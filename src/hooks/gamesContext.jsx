@@ -6,20 +6,24 @@ import { gameReducer, gamesActions, gamesInitialValues } from '../reducers/gameR
 export const GamesContext = createContext()
 
 function useCookieProps() {
-	const { COOKIE_NAME } = magicStrings
+	const { COOKIE_NAME } = magicStrings //! ESTE ES EL PROBLEMA
 	const [allCookies, setSession] = useCookies([COOKIE_NAME])
+	console.log(allCookies.sessionCookie)
 
 	const COOKIES_FUNCTIONS = {
 		getSessionCookie: function () {
 			const checkIfCookies = allCookies?.COOKIE_NAME
-
 			if (checkIfCookies == undefined) return false
 			const { access_token } = checkIfCookies
 			return access_token
 		},
 
-		setSessionCookies: function ({ expires_in = 0, ...args }) {
-			setSession(COOKIE_NAME, { args }, { maxAge: expires_in, secure: true, httpOnly: true, sameSite: true })
+		setSessionCookies: function ({ expires_in = 0, access_token, token_type }) {
+			setSession(
+				COOKIE_NAME,
+				{ access_token, token_type },
+				{ maxAge: expires_in, secure: true, httpOnly: true, sameSite: true }
+			)
 		}
 	}
 
@@ -54,10 +58,8 @@ export function GameProvider({ children }) {
 				gamesState,
 				setGames,
 				setGamesRawData,
-
 				getSessionCookie,
 				setSessionCookies
-				// AllCookies
 			}}
 		>
 			{children}
