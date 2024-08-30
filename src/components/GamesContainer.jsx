@@ -1,58 +1,53 @@
-import { useContext, useEffect } from 'react'
-import { APIInfo } from '../magicStrings'
-import { GamesContext } from '../hooks/gamesContext'
+import { useContext, useEffect, useState } from 'react'
 import { GamesRow } from './Pseudo/GamesRow'
+import { reduceDuplicates, returnEveryResult } from '../functions/functions'
+import { searchLogos } from '../functions/componentsFunctions/containerFunctions'
+import { APIInfo } from '../magicStrings'
+import { FETCH_DATA } from '../functions/functions'
+import { GamesContext } from '../hooks/gamesContext'
+
+const { SECONDARY_APICALLS } = APIInfo
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
 
-async function getPlatformLogos({ gamePlatforms, access_token }) {
-	const platforms_numbers = []
-	const { SECONDARY_APICALLS, FETCH_DATA } = APIInfo
-
-	gamePlatforms.forEach((platforms) => {
-		if (platforms_numbers.includes(platforms)) return
-		const result = platforms_numbers.every((platLogo) => platLogo.platform_logo != platforms.platform_logo)
-		if (result) platforms_numbers.push(platforms)
-	})
-
-	const searchParams = `fields image_id; w id = (${platforms_numbers});`
-	const data = await FETCH_DATA(`/api/${SECONDARY_APICALLS.platform_logos}`, CLIENT_ID, access_token, searchParams)
-	console.log(data)
-	// const data = response.json()
-}
-
 export function GamesContainer({ results }) {
-	const { getSessionCookie } = useContext(GamesContext)
+	const { gamesState, setPlatformLogo, setPlatformsRaw, getSessionCookie } = useContext(GamesContext)
+	const [dataInfo, setDataInfo] = useState([])
+
+	const { access_token } = getSessionCookie()
+	const logosNumber = gamesState['platformsRawData']
 
 	useEffect(() => {
-		async function LogosResult() {
-			const { access_token } = getSessionCookie()
-			if (!access_token) return
-			const logosResult = await getPlatformLogos({
-				gamePlatforms: results.at(5),
-				access_token
+		setDataInfo(returnEveryResult(results))
+		const logosArray = reduceDuplicates({
+			array: dataInfo,
+			comparative: 'platforms',
+			selector: 'platform_logo',
+			initialArrayValue: undefined
+		})
+		const [returnFullArray, searchParams] = searchLogos(logosNumber, logosArray)
+		setPlatformsRaw(returnFullArray)
+		async function getQuery() {
+			const data = await FETCH_DATA({
+				route: `/api/${SECONDARY_APICALLS.platform_logos}`,
+				CLIENT_ID,
+				access_token,
+				searchParams: searchParams
 			})
+			setPlatformLogo([...gamesState['platformsLogos'], ...data])
 		}
+		if (searchParams) getQuery() //! else give toast
 
-		LogosResult()
+		//todo: fix this somehow
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [results])
 
 	return (
-		<ul className="game">
-			{results.map(function (game) {
-				const gameGeneral = game.at(0)
-				return (
-					<GamesRow
-						gameGeneral={gameGeneral}
-						gameCover={game[1]}
-						gameRatings={game[2]}
-						gameGenres={game[3]}
-						gameKeywords={game[4]}
-						gamePlatforms={game[5]}
-						gameThemes={game[6]}
-						key={gameGeneral.id}
-					/>
-				)
-			})}
+		<ul className="gameContainer">
+			{dataInfo.length > 0 &&
+				dataInfo.map(function (game) {
+					const gameGeneral = game.at(0)
+					return <GamesRow gameInformation={game} key={gameGeneral.id} />
+				})}
 		</ul>
 	)
 }

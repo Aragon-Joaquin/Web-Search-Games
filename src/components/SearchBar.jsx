@@ -1,72 +1,66 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
 import { GamesContainer } from './GamesContainer'
-import { APIInfo } from '../magicStrings'
-import { useContext, useEffect } from 'react'
+import { FETCH_STATUS, queriesInfo } from '../magicStrings'
+import { useContext, useEffect, useState } from 'react'
 import { GamesContext } from '../hooks/gamesContext'
-import { FETCH_DATA } from '../functions/functions'
+import { FETCH_DATA, reduceMultipleQuery } from '../functions/functions'
+import { LoadingBar } from '../assets/Loading.jsx'
 
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
-const { FILTERS, APICALLS } = APIInfo
+const { searchFunction, FILTERS } = queriesInfo
+let newValue = ''
 
 export function SearchBar() {
-	const { gamesState, setGames, gamesRawData, setGamesRawData, getSessionCookie } = useContext(GamesContext)
+	const { gamesState, setGames, setGamesRawData, getSessionCookie } = useContext(GamesContext)
+	const [statusFetch, setStatusFetch] = useState(FETCH_STATUS.IDLE)
+
+	const { access_token } = getSessionCookie()
+	const gamesRaw = gamesState['gamesRawData']
 
 	async function getGames(evt) {
 		evt.preventDefault()
 
 		const gameValue = evt.target[0].value
-		const access_token = getSessionCookie()
-		console.log('token: ', access_token)
-		if (gameValue === '' || !access_token) return
+		if (gameValue === '' || !access_token || gameValue === newValue) return
 
-		const searchParams = `
-    f ${FILTERS}; limit ${2}; search "${gameValue}";`
+		newValue = gameValue
+		setStatusFetch(FETCH_STATUS.LOADING) //! first Loading
+		setGames([])
+
+		const searchParams = searchFunction(FILTERS, 2, gameValue)
 		const data = await FETCH_DATA({
 			route: '/api/games',
 			CLIENT_ID,
 			access_token,
 			searchParams
 		})
-
 		setGamesRawData(data)
 	}
 
 	useEffect(() => {
-		const apiCallEntries = Object.entries(APICALLS)
-
-		const access_token = getSessionCookie()
 		async function getGamesSubcategory({ gamesRaw }) {
-			// todo: fix this logic
-			const result = await gamesRaw.map(async (game) => {
-				const { id, total_rating, name, storyline } = game
-				const resultsOfFetch = apiCallEntries.map(async function (url) {
-					const gameUrl = game[url[0]]
-					if (!gameUrl) return []
-					let ArrLength = gameUrl
-					if (gameUrl?.length >= 6) ArrLength = gameUrl.slice(0, 5).toString() // maximum per category
+			const results = gamesRaw.map(async (games) => {
+				const { id, total_rating, name, storyline } = games
+				const searchParams = reduceMultipleQuery(games)
 
-					const searchParams = `
-    f *; where id=(${ArrLength});
-    `
-					const data = await FETCH_DATA({
-						route: `/api/${url[1]}`,
-						CLIENT_ID,
-						access_token,
-						searchParams
-					})
-					return data
+				const data = await FETCH_DATA({
+					route: '/api/multiquery',
+					CLIENT_ID,
+					access_token,
+					searchParams
 				})
-				const addingRest = await Promise.all(resultsOfFetch)
-				return [{ name, id, total_rating, storyline }, ...addingRest]
+				return [{ name, id, total_rating, storyline }, data]
 			})
-			const names = await Promise.all(result)
-			setGames(names)
+			const data = await Promise.all(results)
+			setGames(data)
+			setStatusFetch(FETCH_STATUS.SUCCESS) //! secondLoading
 		}
-		if (gamesRawData != undefined) {
-			getGamesSubcategory({ gamesRaw: gamesRawData })
-		}
-	}, [gamesRawData])
+		if (gamesState['gamesRawData'] != undefined) {
+			getGamesSubcategory({ gamesRaw: gamesRaw })
+		} //! else give a toast
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [gamesState['gamesRawData']])
+
 	return (
 		<>
 			<section>
@@ -81,8 +75,8 @@ export function SearchBar() {
 					<p>section of tags loremupsuim</p>
 				</div>
 			</section>
-
-			<ul>{gamesState.length ? <GamesContainer results={gamesState} /> : <></>}</ul>
+			{statusFetch === FETCH_STATUS.LOADING && <LoadingBar />}
+			{gamesState['games'].length > 0 && <GamesContainer results={gamesState['games']} />}
 		</>
 	)
 }

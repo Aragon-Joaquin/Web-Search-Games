@@ -1,15 +1,21 @@
+export const FETCH_STATUS = {
+	IDLE: 'Idle',
+	LOADING: 'Loading',
+	SUCCESS: 'Success',
+	ERROR: 'Error'
+}
+
 const PORT = 5173
 
 export const magicStrings = {
 	PORT,
 	LOCAL_URL: `http://localhost:${PORT}`,
-	COOKIE_NAME: 'sessionCookie',
-	TOKEN_NAME: 'API_TOKEN'
+	COOKIE_NAME: 'sessionCookie'
+	//TOKEN_NAME: 'API_TOKEN'
 }
 
 export const APIInfo = {
 	GAMES_ENDPOINT: 'https://api.igdb.com/v4/',
-	FILTERS: 'id,name,age_ratings,cover,keywords,genres,platforms,total_rating,themes,storyline',
 	APICALLS: {
 		// id ,name && total_rating aren't data we need to search
 		cover: 'covers',
@@ -24,7 +30,38 @@ export const APIInfo = {
 	}
 }
 
+export const queriesInfo = {
+	FILTERS: `id,name,age_ratings,cover,keywords,
+		genres,platforms,total_rating,themes,storyline`,
+
+	multipleQuery: function (endpoint, queryName = 'games', fields = '*', limit = '1', condition, searcher) {
+		return `query ${endpoint} "${queryName}" {
+			f ${fields};
+			limit ${limit};
+			w ${condition} = (${searcher});
+		};`
+	},
+	searchFunction: function (filters = '*', limit = 1, gameValue) {
+		return `f ${filters}; limit ${limit}; search "${gameValue}";`
+	},
+	searchWhereFunction: function (filters = '*', limit = 1, condition, ArrParams) {
+		return `f ${filters}; limit ${limit}; where ${condition}=(${ArrParams});`
+	},
+	IMAGE_ID: function (size = 'thumb') {
+		return `https://images.igdb.com/igdb/image/upload/t_${size}/`
+	},
+	AGE_RATING_IMAGE: function (CATEGORY, RATING) {
+		return `https://www.igdb.com/icons/rating_icons/${CATEGORY}/${RATING}.png`
+		// for e.g. https://www.igdb.com/icons/rating_icons/esrb/esrb_ao.png
+	}
+
+	// searchPlatformsGames: function (gamePlatforms) {
+	// 	return `fields image_id; w id = (${gamePlatforms});`
+	// }
+}
+
 // todo: finish this
+/*
 function filtersToQuery(id) {
 	const filterCall = {
 		cover: 'f url',
@@ -32,3 +69,4 @@ function filtersToQuery(id) {
 		themes: 'f name'
 	}
 }
+*/

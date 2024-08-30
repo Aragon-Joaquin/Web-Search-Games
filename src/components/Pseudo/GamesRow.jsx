@@ -1,39 +1,30 @@
-// const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+import { APIInfo } from '../../magicStrings.js'
+import { Footer } from './gameRow/Footer.jsx'
+import { Header } from './gameRow/Header.jsx'
+import { Main } from './gameRow/Main.jsx'
+import '../../styles/componentsStyles/gamesRow.css'
 
-export function GamesRow({ gameGeneral, gameCover, gameRatings, gameGenres, gameKeywords, gamePlatforms, gameThemes }) {
-	const { image_id } = gameCover[0]
-	const IMAGE_URL = 'https://images.igdb.com/igdb/image/upload/t_1080p/'
+function reduceCategories(gamesCategories) {
+	const apiCallKeys = Object.values(APIInfo.APICALLS)
+	const data = apiCallKeys.map((call) => {
+		const gameFound = gamesCategories.find((element) => element.at(0) === `Game ${call}`)
+		return gameFound ? gameFound.at(1) : undefined
+	})
 
-	const { total_rating, name, id, storyline } = gameGeneral
+	return data
+}
 
+// gameGeneral, gameCover, gameRatings, gameGenres, gameKeywords, gamePlatforms, gameThemes
+
+export function GamesRow({ gameInformation }) {
+	console.log('game', gameInformation)
+	const { total_rating, name, storyline, id } = gameInformation.at(0)
+	const [cover, ageRating, genres, keywords, platforms, themes] = reduceCategories(gameInformation.at(1))
 	return (
-		<li>
-			<header>
-				<aside>
-					{gameThemes.map((theme) => {
-						return <div key={theme.id}>{theme.name}</div>
-					})}
-				</aside>
-				<h2>{name}</h2>
-				<p>{total_rating ? Math.trunc(total_rating) : '?'}/100⭐</p>
-				{/* //todo: svg instead of star */}
-
-				<div />
-			</header>
-
-			<main>
-				<img src={`${IMAGE_URL}${image_id}.jpg`} alt="" />
-			</main>
-
-			<footer>
-				<section>
-					{storyline ? (
-						<span className="storyline-available">{storyline}</span>
-					) : (
-						<span className="storyline-not-available">Storyline without data</span>
-					)}
-				</section>
-			</footer>
+		<li className="gameRow-Box">
+			<Header props={{ platforms, total_rating, themes, name }} />
+			<Main props={{ cover, ageRating }} />
+			<Footer props={{ storyline }} />
 		</li>
 	)
 }

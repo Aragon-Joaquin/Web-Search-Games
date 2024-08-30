@@ -1,0 +1,48 @@
+/*! GAMEROW - FATHER ELEMENT */
+
+.gameContainer {
+	display: flex;
+	/* align-items: center; */
+	flex-direction: row;
+	gap: 30px;
+	flex: 1;
+}
+
+.gameRow-Box {
+	padding: 10px;
+	background-color: #383838;
+	border-radius: 15px;
+	max-height: fit-content;
+	width: 20vw;
+}
+/*! HEADER */
+
+.headerRow-Platform {
+	display: flex;
+	align-items: center;
+	& img {
+		max-height: 50px;
+		max-width: min-content;
+		object-fit: contain;
+		aspect-ratio: 16 / 9;
+	}
+}
+
+.headerRow-Themes {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+	gap: 10px;
+}
+
+/*! MAIN */
+
+.mainRow-Cover {
+	& img {
+		max-height: 350px;
+		aspect-ratio: 2 / 3;
+	}
+}
+
+/*! FOOTER */
