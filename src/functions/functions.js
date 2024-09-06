@@ -1,18 +1,3 @@
-export async function FETCH_DATA({ route, CLIENT_ID, access_token, searchParams }) {
-	const result = await fetch(route, {
-		method: 'POST',
-		mode: 'cors',
-		headers: {
-			'Client-ID': `${CLIENT_ID}`,
-			Authorization: `Bearer ${access_token}`
-		},
-		body: searchParams
-	})
-	//* fetch(url, { signal: AbortSignal.timeout(5000) })
-	const data = await result.json()
-	return data
-}
-
 //!
 //! Helps when fetching a singular category. It removes ID's that are identical and only it keeps one
 //!
@@ -87,16 +72,15 @@ export function returnEveryResult(results) {
 }
 
 //!
-//! LocalStorage functions
+//! SessionStorage functions
 //!
 
-export function getLocalStorage(TOKEN_NAME) {
-	const localStorage = globalThis.localStorage.getItem(TOKEN_NAME)
-	return JSON.parse(localStorage)
+export function getSessionStorage(TOKEN_NAME) {
+	return JSON.parse(globalThis.sessionStorage.getItem(TOKEN_NAME))
 }
 
-export function setLocalStorage({ TOKEN_NAME, data }) {
-	return globalThis.localStorage?.setItem(TOKEN_NAME, JSON.stringify(data))
+export function setSessionStorage(TOKEN_NAME, data) {
+	globalThis.sessionStorage.setItem(TOKEN_NAME, JSON.stringify(data))
 }
 
 //!

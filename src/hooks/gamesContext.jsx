@@ -34,13 +34,6 @@ function useGameReducer() {
 			payload: gamesState
 		})
 
-	const setGamesRawData = (gamesState) => {
-		dispatch({
-			type: 'SET_GAMESRAW',
-			payload: gamesState
-		})
-	}
-
 	const setPlatformsRaw = (gamesState) => {
 		dispatch({
 			type: 'SET_PLATFORMSRAW',
@@ -55,19 +48,21 @@ function useGameReducer() {
 		})
 	}
 
-	return { state, setGames, setGamesRawData, setPlatformsRaw, setPlatformLogo }
+	return { state, setGames, setPlatformsRaw, setPlatformLogo }
 }
 
 export function GameProvider({ children }) {
 	const { getSessionCookie, setSessionCookies } = useCookieProps()
-	const { state: gamesState, setGames, setGamesRawData, setPlatformLogo, setPlatformsRaw } = useGameReducer()
-
+	const { state: gamesState, setGames, setPlatformLogo, setPlatformsRaw } = useGameReducer()
+	/* 
+		Its not as important to include it in the a Gamereducer or
+		is not that complex for making another reducer called "ErrorReducer"
+	*/
 	return (
 		<GamesContext.Provider
 			value={{
 				gamesState,
 				setGames,
-				setGamesRawData,
 				setPlatformsRaw,
 				setPlatformLogo,
 				getSessionCookie,

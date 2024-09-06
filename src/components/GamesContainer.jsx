@@ -3,17 +3,15 @@ import { GamesRow } from './Pseudo/GamesRow'
 import { reduceDuplicates, returnEveryResult } from '../functions/functions'
 import { searchLogos } from '../functions/componentsFunctions/containerFunctions'
 import { APIInfo } from '../magicStrings'
-import { FETCH_DATA } from '../functions/functions'
 import { GamesContext } from '../hooks/gamesContext'
+import { FETCH_DATA } from '../functions/APIPetitions'
 
 const { SECONDARY_APICALLS } = APIInfo
-const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
 
 export function GamesContainer({ results }) {
-	const { gamesState, setPlatformLogo, setPlatformsRaw, getSessionCookie } = useContext(GamesContext)
+	const { gamesState, setPlatformLogo, setPlatformsRaw } = useContext(GamesContext)
 	const [dataInfo, setDataInfo] = useState([])
 
-	const { access_token } = getSessionCookie()
 	const logosNumber = gamesState['platformsRawData']
 
 	useEffect(() => {
@@ -29,8 +27,6 @@ export function GamesContainer({ results }) {
 		async function getQuery() {
 			const data = await FETCH_DATA({
 				route: `/api/${SECONDARY_APICALLS.platform_logos}`,
-				CLIENT_ID,
-				access_token,
 				searchParams: searchParams
 			})
 			setPlatformLogo([...gamesState['platformsLogos'], ...data])

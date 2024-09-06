@@ -7,11 +7,9 @@ import { GameProvider } from './hooks/gamesContext.jsx'
 
 ReactDOM.hydrateRoot(
 	document.getElementById('root'),
-	<>
-		<GameProvider>
-			<App />
-		</GameProvider>
-	</>
+	<GameProvider>
+		<App />
+	</GameProvider>
 )
 
 //React.StrictMode

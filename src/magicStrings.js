@@ -1,17 +1,20 @@
-export const FETCH_STATUS = {
-	IDLE: 'Idle',
-	LOADING: 'Loading',
-	SUCCESS: 'Success',
-	ERROR: 'Error'
-}
+export const PORT = 5173
+export const FETCH_TIMEOUT_SECONDS = 5000
+export const ACCESS_TOKEN_NAME = 'ACCESS_TOKEN'
 
-const PORT = 5173
+export const FETCH_STATUS = {
+	IDLE: { status: 'Idle' },
+	LOADING: { status: 'Loading' },
+	SUCCESS: { status: 'Success' },
+	ERROR: function (error) {
+		return { status: 'Error', errorMessage: error }
+	}
+}
 
 export const magicStrings = {
 	PORT,
 	LOCAL_URL: `http://localhost:${PORT}`,
 	COOKIE_NAME: 'sessionCookie'
-	//TOKEN_NAME: 'API_TOKEN'
 }
 
 export const APIInfo = {

@@ -29,7 +29,7 @@ export function searchLogos(logosFetchedNumber, categoryUniqueList) {
  * @returns {string} Returns only ESRB ratings for now.
  */
 
-export function searchPlatforms(ageRating) {
+export function getAgeRatingImages(ageRating) {
 	const ERSB = ageRating?.find((element) => (element.category === 1 ? element : undefined))
 	if (!ERSB) return AGE_RATING_IMAGE(AGE_CATEGORIES[1], ESRB_AGE_RATINGS[6])
 	const ERSB_RATING = ERSB.rating
