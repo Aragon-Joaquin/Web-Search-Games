@@ -22,19 +22,19 @@ Or if you use [pnpm](https://pnpm.io/).
 ```
 ## 🔨 Setting it up
 
-Create a .env file in the root of the project.
+1) Create a .env file in the root of the project.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/ab974cd6-911f-451b-bf71-35df09f54cf3" />
 </p>
 
-Then, go to [TwitchDevelopers](https://dev.twitch.tv/) and log-in with your twitch account and go to your **console** and click on **"_Register your application_"**.
+2) Then, go to [TwitchDevelopers](https://dev.twitch.tv/) and log-in with your twitch account and go to your **console** and click on **"_Register your application_"**.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/48a2068e-ecc1-481b-b5d0-48f51252709f" />
 </p>
 
-Once there, do the next steps:
+3) Once there, do the next steps:
 * Add the route, that the project will be hosted on (default is **localhost:5173**) in OathVerification
 
 * Copy your clientID
@@ -45,7 +45,7 @@ Once there, do the next steps:
   <img src="https://github.com/user-attachments/assets/1e90e128-5284-4d58-b8f4-dbad7b439cc4" />
 </p>
 
-And lastly, in the previous .env file created, create the next variables:
+4) And lastly, in the previous .env file created, create the next variables:
 * VITE_CLIENT_ID=yourClientId
 * VITE_CLIENT_SECRET=yourClientSecret
 
@@ -53,7 +53,7 @@ And lastly, in the previous .env file created, create the next variables:
   <img src="https://github.com/user-attachments/assets/f0101826-774f-4e2d-9487-549c2b24d8d6" />
 </p>
 
-And for the last step, just do a simple:
+5) And for the last step, just do a simple:
 ```bash
   npm install
   npm run dev
