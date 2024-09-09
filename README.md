@@ -1,14 +1,92 @@
-next commit i'll update this + a chartboard of what im doing.
-there's a ton to improve, i'll be working on that later so dont worry
-plus im learning a ton and i think i get most of the things of react. Anyway, this is like a test proyect
 
-## Commits Information :information_source:
+# 🎮 Game Searcher - (Using the IGDB API)
+
+The idea of the project principally relies on getting information about the games via user's input.
+The code is not perfect and kinda clumsy since it's my first react project.
+
+
+## ℹ Installation 
+
+Install it with the pack manager [npm](https://www.npmjs.com/).
+
+```bash
+  npm i Web-Search-Games
+  cd Web-Search-Games
+```
+
+Or if you use [pnpm](https://pnpm.io/).
+
+```bash
+  pnpm i Web-Search-Games
+  cd Web-Search-Games
+```
+## 🔨 Setting it up
+
+Create a .env file in the root of the project.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ab974cd6-911f-451b-bf71-35df09f54cf3" />
+</p>
+
+Then, go to [TwitchDevelopers](https://dev.twitch.tv/) and log-in with your twitch account and go to your **console** and click on **"_Register your application_"**.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/48a2068e-ecc1-481b-b5d0-48f51252709f" />
+</p>
+
+Once there, do the next steps:
+* Add the route, that the project will be hosted on (default is **localhost:5173**) in OathVerification
+
+* Copy your clientID
+
+* Generate a new clientSecret (__DO NOT SHARE!!__)
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1e90e128-5284-4d58-b8f4-dbad7b439cc4" />
+</p>
+
+And lastly, in the previous .env file created, create the next variables:
+* VITE_CLIENT_ID=yourClientId
+* VITE_CLIENT_SECRET=yourClientSecret
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f0101826-774f-4e2d-9487-549c2b24d8d6" />
+</p>
+
+And for the last step, just do a simple:
+```bash
+  npm install
+  npm run dev
+```
+## ⭐ Next Features?
+
+You could check them on my **[Notion!](https://www.notion.so/AppGames-c345a6b04c144287964fc2120da09f21#de0ac4e98762400ab2b65ef151f37c6b)**
+
+Here's a preview of what im thinking to do!:
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3eed1e1e-63a8-4710-a551-187cab8e4165" />
+</p>
+
+
+## 🗣 Feedback
+
+If you have any feedback, please reach me out on Discord!
+
+<p align="center">
+  <a><img src="https://img.shields.io/badge/aragon2004-Username?style=for-the-badge&logo=discord&label=Discord&color=%235865F2"></a>
+</p>
+
+
+## ✉ Commits information
 
 - ⚔️/🔰 > Initial Commit
 
 - 👷 > Branch Bugfix
 
-- Updates:
-  - 🚀 > Mayor update
-  - 🔨 > Minor update
-  - 🌟 > New funcionality
+__Updates:__
+
+    - 🚀 > Mayor update
+    - 🔨 > Minor update
+    - 🌟 > New funcionality
+
