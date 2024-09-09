@@ -31,7 +31,7 @@ Or if you use [pnpm](https://pnpm.io/).
 2) Then, go to [TwitchDevelopers](https://dev.twitch.tv/) and log-in with your twitch account and go to your **console** and click on **"_Register your application_"**.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/48a2068e-ecc1-481b-b5d0-48f51252709f" />
+  <img src="https://github.com/user-attachments/assets/48a2068e-ecc1-481b-b5d0-48f51252709f" height="450px"/>
 </p>
 
 3) Once there, do the next steps:
@@ -41,16 +41,16 @@ Or if you use [pnpm](https://pnpm.io/).
 
 * Generate a new clientSecret (__DO NOT SHARE!!__)
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/1e90e128-5284-4d58-b8f4-dbad7b439cc4" />
+<p align="center"maxHeight="200px">
+  <img src="https://github.com/user-attachments/assets/1e90e128-5284-4d58-b8f4-dbad7b439cc4"  height="550px"/>
 </p>
 
 4) And lastly, in the previous .env file created, create the next variables:
 * VITE_CLIENT_ID=yourClientId
 * VITE_CLIENT_SECRET=yourClientSecret
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/f0101826-774f-4e2d-9487-549c2b24d8d6" />
+<p align="center" maxHeight="200px">
+  <img src="https://github.com/user-attachments/assets/f0101826-774f-4e2d-9487-549c2b24d8d6"/>
 </p>
 
 5) And for the last step, just do a simple:
@@ -65,7 +65,7 @@ You could check them on my **[Notion!](https://www.notion.so/AppGames-c345a6b04c
 Here's a preview of what im thinking to do!:
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/3eed1e1e-63a8-4710-a551-187cab8e4165" />
+  <img src="https://github.com/user-attachments/assets/3eed1e1e-63a8-4710-a551-187cab8e4165"  height="450px"/>
 </p>
 
 
