@@ -27,6 +27,7 @@ function App() {
 				<p className="header-description">Lorem, ipsum dolor.</p>
 			</header>
 
+			{/* //todo: make the component wait till the token is succesfully gathered */}
 			<main className="main">
 				<SearchBar />
 			</main>

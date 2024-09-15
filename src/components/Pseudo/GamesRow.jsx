@@ -23,7 +23,7 @@ export function GamesRow({ gameInformation }) {
 	return (
 		<li className="gameRow-Box">
 			<Header props={{ platforms, total_rating, themes, name }} />
-			<Main props={{ cover, ageRating }} />
+			<Main props={{ cover, ageRating, name }} />
 			<Footer props={{ storyline }} />
 		</li>
 	)

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { GamesContext } from './gamesContext'
-import { FETCH_STATUS, queriesInfo } from '../magicStrings'
+import { FETCH_STATUS, MAXIMUM_FETCH_QUERIES, queriesInfo } from '../magicStrings'
 import { FETCH_DATA, getGamesSubcategory } from '../functions/APIPetitions.js'
 
 const { searchFunction, FILTERS } = queriesInfo
@@ -41,7 +41,8 @@ export function useGetGames({ search }) {
 			setStatusFetch(FETCH_STATUS.LOADING)
 			setGames([])
 			try {
-				const searchParams = searchFunction(FILTERS, 2, search)
+				const searchParams = searchFunction(FILTERS, MAXIMUM_FETCH_QUERIES, search)
+
 				const data = await FETCH_DATA({
 					route: '/api/games',
 					searchParams

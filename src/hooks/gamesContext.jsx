@@ -55,8 +55,7 @@ export function GameProvider({ children }) {
 	const { getSessionCookie, setSessionCookies } = useCookieProps()
 	const { state: gamesState, setGames, setPlatformLogo, setPlatformsRaw } = useGameReducer()
 	/* 
-		Its not as important to include it in the a Gamereducer or
-		is not that complex for making another reducer called "ErrorReducer"
+		maybe a custom Hook could prevent making the values reactives
 	*/
 	return (
 		<GamesContext.Provider
