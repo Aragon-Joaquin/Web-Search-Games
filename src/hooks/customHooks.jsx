@@ -2,30 +2,33 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { GamesContext } from './gamesContext'
 import { FETCH_STATUS, MAXIMUM_FETCH_QUERIES, queriesInfo } from '../magicStrings'
 import { FETCH_DATA, getGamesSubcategory } from '../functions/APIPetitions.js'
+import { createClassError, ERROR_MESSAGE_TYPE, ValidateError } from '../utils/error_handle.js'
 
 const { searchFunction, FILTERS } = queriesInfo
 
 export function useSearch() {
-	const [updateSearch, setUpdateSearch] = useState('')
+	const [updateSearch, setUpdateSearch] = useState('') //! could be a better way to do this
+	const [validSearch, setValidSearch] = useState('')
+
+	const prevValue = useRef('')
 	const firstRender = useRef(true)
 
 	useEffect(() => {
-		if (firstRender) {
+		if (firstRender.current) {
 			firstRender.current = false
 			return
 		}
+		console.log('length', updateSearch.length)
 
-		//! implement better error handleing
-		// console.log(updateSearch.length)
-		// if (updateSearch.length === 0) {
-		// 	setError('Cannot search a empty game')
-		// 	return
-		// }
+		if (updateSearch.length < 3) return setValidSearch(createClassError(ERROR_MESSAGE_TYPE.SEARCH_LESS_THAN))
 
-		// setError(null)
+		if (prevValue.current === updateSearch) return setValidSearch(createClassError(ERROR_MESSAGE_TYPE.SEARCH_SAME_NAME))
+		prevValue.current = updateSearch
+
+		setValidSearch(updateSearch)
 	}, [updateSearch])
 
-	return { updateSearch, setUpdateSearch }
+	return { validSearch, setUpdateSearch }
 }
 
 export function useGetGames({ search }) {
@@ -33,10 +36,12 @@ export function useGetGames({ search }) {
 	const [statusFetch, setStatusFetch] = useState()
 
 	const { setGames } = useContext(GamesContext)
-	const prevValue = useRef('')
 
 	useEffect(() => {
 		console.log(search)
+		if (search instanceof ValidateError) return
+		//! its not the best way to do this but i wanted to do it anymays to test it out
+
 		async function fetchGames() {
 			setStatusFetch(FETCH_STATUS.LOADING)
 			setGames([])
@@ -52,9 +57,7 @@ export function useGetGames({ search }) {
 				setStatusFetch(FETCH_STATUS.ERROR(e.message))
 			}
 		}
-		if (!search) return console.error('!')
-		if (prevValue.current === search) return console.error('!!')
-		prevValue.current = search
+		if (!search) return
 		fetchGames()
 	}, [search])
 

@@ -118,21 +118,23 @@
 .headerRow-Rating {
 	position: relative;
 	margin: 10px 0px;
-	& aside {
+	& span {
+		padding: 0px 0px 0px 3px;
 		width: fit-content;
 		font-size: calc(8px + 0.8vw);
 		font-weight: 500;
 		background-color: #20202080;
-		border-radius: 0px 5px 0px 0px;
+		border-radius: 0px 5px 0px 7px;
 		z-index: 2;
 		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
 		left: 100%;
 		transform: translate(-100%);
-		align-items: center;
 		position: absolute;
 		& svg {
-			width: 2.5vw;
-			min-width: calc(12px + 1.2vw);
+			width: 3.5vw;
+			max-width: 24px;
 		}
 	}
 }

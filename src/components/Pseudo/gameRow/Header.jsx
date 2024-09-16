@@ -3,7 +3,7 @@ import { queriesInfo } from '../../../magicStrings'
 import { getPlatforms } from '../../../functions/componentsFunctions/RowFunctions'
 import { GamesContext } from '../../../hooks/gamesContext'
 import { StarSVG } from '../../../assets/StarSVG'
-import { pickAColor } from '../../../styles/componentsStyles/pickAColor'
+import { pickAColor } from '../../../styles/pickAColor'
 
 const { IMAGE_ID } = queriesInfo
 
@@ -41,7 +41,7 @@ export function Header({ props }) {
 				{plaformsState?.length > 0 ? plaformsState.map((element) => element) : <></>}
 			</div>
 			<p className="headerRow-Rating">
-				<aside>
+				<span>
 					{total_rating ? (
 						<>
 							{Math.trunc(total_rating)}
@@ -50,7 +50,7 @@ export function Header({ props }) {
 					) : (
 						''
 					)}
-				</aside>
+				</span>
 			</p>
 
 			<div />
