@@ -1,5 +1,6 @@
 import { getSessionStorage, reduceMultipleQuery } from './functions'
 import { ACCESS_TOKEN_NAME, FETCH_TIMEOUT_SECONDS } from '../magicStrings'
+import { createClassError, ERROR_MESSAGE_TYPE, ERROR_NAME_TYPE } from '../utils/error_handle'
 
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
 const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET
@@ -18,7 +19,7 @@ export async function FETCH_ACCESS_TOKEN() {
 		})
 		return await result.json()
 	} catch (e) {
-		console.log(e)
+		throw new createClassError(ERROR_NAME_TYPE.FETCH_ERROR, ERROR_MESSAGE_TYPE.FETCH_TIMEOUT_DATA)
 	}
 }
 
@@ -39,7 +40,7 @@ export async function FETCH_DATA({ route, searchParams }) {
 		})
 		return await result.json()
 	} catch (e) {
-		console.log(e)
+		throw new createClassError(ERROR_NAME_TYPE.FETCH_ERROR, ERROR_MESSAGE_TYPE.FETCH_TIMEOUT_DATA)
 	}
 }
 

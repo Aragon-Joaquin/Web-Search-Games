@@ -14,7 +14,6 @@ export function Header({ props }) {
 	const { platforms, themes, total_rating, name } = props
 
 	const color = pickAColor(themes)
-	console.log('render color', color)
 
 	useEffect(() => {
 		if (!platforms) return

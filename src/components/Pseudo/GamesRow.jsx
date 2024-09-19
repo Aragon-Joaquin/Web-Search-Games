@@ -17,7 +17,6 @@ function reduceCategories(gamesCategories) {
 // gameGeneral, gameCover, gameRatings, gameGenres, gameKeywords, gamePlatforms, gameThemes
 
 export function GamesRow({ gameInformation }) {
-	console.log('game', gameInformation)
 	const { total_rating, name, storyline, id } = gameInformation.at(0)
 	const [cover, ageRating, genres, keywords, platforms, themes] = reduceCategories(gameInformation.at(1))
 	return (

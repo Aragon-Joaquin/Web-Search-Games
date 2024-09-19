@@ -1,11 +1,12 @@
+import '../styles/componentsStyles/SearchBar.css'
 import { GamesContainer } from './GamesContainer'
 import { FETCH_STATUS } from '../magicStrings'
 import { useContext, useEffect, useState } from 'react'
 import { GamesContext } from '../hooks/gamesContext'
 import { LoadingBar } from '../assets/Loading.jsx'
-import { useGetGames, useSearch } from '../hooks/customHooks.jsx'
-import { ValidateError } from '../utils/error_handle.js'
-import '../styles/componentsStyles/SearchBar.css'
+import useSearch from '../hooks/useSearch.jsx'
+import useGetGames from '../hooks/useGetGames.jsx'
+import { ERROR_NAME_TYPE } from '../utils/error_handle.js'
 
 export function SearchBar() {
 	const { gamesState } = useContext(GamesContext)
@@ -13,17 +14,23 @@ export function SearchBar() {
 	const { statusFetch } = useGetGames({ search: validSearch })
 	const [isError, setIsError] = useState()
 
-	// i know this is so verbose but i really like working this classes
+	const GamesValue = gamesState['games']
 	useEffect(() => {
-		if (validSearch instanceof ValidateError) setIsError(true)
-		else setIsError(false)
+		if (validSearch?.name != ERROR_NAME_TYPE.SEARCH_ERROR) return setIsError(false)
+		setIsError(validSearch)
 	}, [validSearch])
+
+	useEffect(() => {
+		if (statusFetch?.status != 'Error') return setIsError(false)
+		setIsError(statusFetch?.errorMessage)
+	}, [statusFetch])
 
 	function handleSubmit(evt) {
 		evt.preventDefault()
 		const gameValue = evt.target[0].value
 		setUpdateSearch(gameValue)
 	}
+
 	return (
 		<>
 			<section>
@@ -40,13 +47,13 @@ export function SearchBar() {
 			</section>
 
 			{statusFetch === FETCH_STATUS.LOADING && <LoadingBar />}
-			{gamesState['games'].length > 0 && <GamesContainer results={gamesState['games']} />}
+			{GamesValue?.length > 0 && <GamesContainer results={GamesValue} />}
 
 			{isError && (
 				<aside className="popup-error">
 					<button onClick={() => setIsError(false)}>🗙</button>
-					<h4>An error has occured.</h4>
-					<p>{`${validSearch.message}`}</p>
+					<h4>A {`${isError.name}`} has occured.</h4>
+					<p>{`${isError.message}`}</p>
 				</aside>
 			)}
 		</>
