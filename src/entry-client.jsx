@@ -1,11 +1,11 @@
-import ReactDOM from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './styles/index.css'
 import { GameProvider } from './hooks/gamesContext.jsx'
 
 // !React in client inyection === csr.
 
-ReactDOM.hydrateRoot(
+hydrateRoot(
 	document.getElementById('root'),
 	<GameProvider>
 		<App />

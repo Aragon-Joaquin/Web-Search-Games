@@ -1,41 +1,30 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GamesRow } from './Pseudo/GamesRow'
 import { reduceDuplicates, returnEveryResult } from '../functions/functions'
+import useGetPlatforms from '../hooks/usePlatform'
 import { searchLogos } from '../functions/componentsFunctions/containerFunctions'
-import { APIInfo } from '../magicStrings'
-import { GamesContext } from '../hooks/gamesContext'
-import { FETCH_DATA } from '../functions/APIPetitions'
-
-const { SECONDARY_APICALLS } = APIInfo
 
 export function GamesContainer({ results }) {
-	const { gamesState, setPlatformLogo, setPlatformsRaw } = useContext(GamesContext)
 	const [dataInfo, setDataInfo] = useState([])
-
-	const logosNumber = gamesState['platformsRawData']
+	const { cachePlatformLogos, setCachePlatformLogos, setSearchParams } = useGetPlatforms() //! somehow fix
 
 	useEffect(() => {
 		setDataInfo(returnEveryResult(results))
+	}, [results])
+
+	useEffect(() => {
+		if (!dataInfo) return
 		const logosArray = reduceDuplicates({
 			array: dataInfo,
 			comparative: 'platforms',
 			selector: 'platform_logo',
 			initialArrayValue: undefined
 		})
-		const [returnFullArray, searchParams] = searchLogos(logosNumber, logosArray)
-		setPlatformsRaw(returnFullArray)
-		async function getQuery() {
-			const data = await FETCH_DATA({
-				route: `/api/${SECONDARY_APICALLS.platform_logos}`,
-				searchParams: searchParams
-			})
-			setPlatformLogo([...gamesState['platformsLogos'], ...data])
-		}
-		if (searchParams) getQuery() //! else give toast
-
-		//todo: fix this somehow
+		const [returnFullArray, searchString] = searchLogos(cachePlatformLogos, logosArray)
+		setCachePlatformLogos(returnFullArray)
+		setSearchParams(searchString)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [results])
+	}, [dataInfo])
 
 	return (
 		<ul className="gameContainer">

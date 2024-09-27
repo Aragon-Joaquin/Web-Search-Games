@@ -6,14 +6,11 @@
 export function reduceDuplicates({ array, comparative, selector = 'id', initialArrayValue = [] }) {
 	const comparativeArray = initialArrayValue
 	if (!comparative) return
-	const categoriesResumed = array.map((upperGame) => {
-		return upperGame
-			.at(1)
-			.filter((category) => {
-				if (category[0] !== `Game ${comparative}`) return
-				return category
-			})
-			.flat(1) // so it can return [string,[]] instead of [[string,[]]]
+	const categoriesResumed = array.flatMap((upperGame) => {
+		return upperGame.at(1).filter((category) => {
+			if (category[0] !== `Game ${comparative}`) return
+			return category
+		})
 	})
 
 	categoriesResumed.forEach((game) => {

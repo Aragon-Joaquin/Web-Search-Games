@@ -1,5 +1,6 @@
 import { getAgeRatingImages } from '../../../functions/componentsFunctions/containerFunctions'
 import { queriesInfo } from '../../../magicStrings'
+import imgNotFound from '../../../assets/notFound.jpg'
 
 const { IMAGE_ID } = queriesInfo
 
@@ -19,11 +20,11 @@ export function Main({ props }) {
 						className="mainRow-MainCover"
 						src={`${IMAGE_URL}${image_id}.jpg`}
 						alt={`Showing up the cover of the game "${name}"`}
-						loading="lazy"
+						// loading="lazy"
 					/>
 				</>
 			) : (
-				<img className="mainRow-MainCover" src="../../../../public/notFound.jpg" alt="Image Cover not found" />
+				<img className="mainRow-MainCover" src={imgNotFound} alt="Image Cover not found" />
 			)}
 		</main>
 	)

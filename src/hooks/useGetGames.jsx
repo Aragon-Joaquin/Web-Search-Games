@@ -35,7 +35,6 @@ export default function useGetGames({ search }) {
 					searchParams
 				})
 
-				console.log(data)
 				if (data?.length >= 1) setGamesRawData(data)
 				else {
 					setStatusFetch(SUCCESS)

@@ -15,6 +15,7 @@ export function SearchBar() {
 	const [isError, setIsError] = useState()
 
 	const GamesValue = gamesState['games']
+
 	useEffect(() => {
 		if (validSearch?.name != ERROR_NAME_TYPE.SEARCH_ERROR) return setIsError(false)
 		setIsError(validSearch)

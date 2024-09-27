@@ -34,13 +34,6 @@ function useGameReducer() {
 			payload: gamesState
 		})
 
-	const setPlatformsRaw = (gamesState) => {
-		dispatch({
-			type: 'SET_PLATFORMSRAW',
-			payload: gamesState
-		})
-	}
-
 	const setPlatformLogo = (gamesState) => {
 		dispatch({
 			type: 'SET_PLATFORMLOGOS',
@@ -48,12 +41,12 @@ function useGameReducer() {
 		})
 	}
 
-	return { state, setGames, setPlatformsRaw, setPlatformLogo }
+	return { state, setGames, setPlatformLogo }
 }
 
 export function GameProvider({ children }) {
 	const { getSessionCookie, setSessionCookies } = useCookieProps()
-	const { state: gamesState, setGames, setPlatformLogo, setPlatformsRaw } = useGameReducer()
+	const { state: gamesState, setGames, setPlatformLogo } = useGameReducer()
 	/* 
 		maybe a custom Hook could prevent making the values reactives
 	*/
@@ -62,8 +55,8 @@ export function GameProvider({ children }) {
 			value={{
 				gamesState,
 				setGames,
-				setPlatformsRaw,
 				setPlatformLogo,
+
 				getSessionCookie,
 				setSessionCookies
 			}}
