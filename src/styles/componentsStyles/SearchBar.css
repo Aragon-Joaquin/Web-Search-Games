@@ -1,3 +1,45 @@
+.header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.header-title {
+	margin: 50px 0px 10px 0px;
+	font-size: 2em;
+}
+
+.header-description {
+	font-weight: 500;
+	text-align: center;
+}
+
+.main-form {
+	margin: 20px 0px;
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	position: relative;
+	& input[type='text'] {
+		border: 2px solid #313131;
+		padding: 10px;
+		border-radius: 10px 0px 0px 10px;
+	}
+
+	& input[type='submit'] {
+		cursor: pointer;
+		color: #ffffff90;
+		background-color: #ffffff20;
+		width: fit-content;
+		border-radius: 0px 10px 10px 0px;
+
+		&:hover {
+			background-color: #ffffff50;
+			color: #ffffff;
+		}
+	}
+}
+
 .main-form-error input[type='text'] {
 	box-shadow: 0px 0px 2px 2px rgb(170, 0, 0);
 }
@@ -10,6 +52,7 @@
 	border-radius: 3px;
 	padding: 10px;
 	margin: 0px 10px 10px 0px;
+	z-index: 10;
 
 	& h4 {
 		margin: 0px;
@@ -31,5 +74,100 @@
 		position: absolute;
 		transform: translate(-100%);
 		left: calc(100% - 10px);
+	}
+}
+
+.header-description {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	& p {
+		line-height: normal;
+	}
+}
+
+.header-subtitle {
+	& .header-strong {
+		color: transparent;
+		text-align: center;
+		background: linear-gradient(to right, #58c4dc 50%, #006f88);
+		animation: LetterAnimation ease-in-out 5s infinite;
+		background-clip: text;
+		background-size: 400% 100%;
+		transform-origin: center -20px;
+	}
+	& svg {
+		background-color: transparent;
+		color: #58c4dc;
+		margin: 0px 3px;
+		vertical-align: bottom;
+		display: inline-block;
+		height: 20px;
+		animation: ReactLogo-Animation ease-in-out 1s infinite alternate;
+	}
+}
+
+.header-info {
+	a {
+		color: #b49bee;
+		&:visited {
+			color: #9b8fb7;
+		}
+		&:hover {
+			filter: brightness(140%);
+		}
+	}
+}
+
+.LoadingBar {
+	margin: 30px 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	& h2 {
+		margin: 0;
+	}
+}
+
+.LoadingBar svg {
+	width: 50px;
+	height: 100%;
+	animation: 2s Circle linear infinite;
+}
+
+/* loadingBar animations */
+@keyframes Circle {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+/* testing the animations */
+@keyframes ReactLogo-Animation {
+	from {
+		filter: brightness(100%);
+		transform: translateY(-1px);
+	}
+	to {
+		filter: brightness(90%);
+		transform: translateY(1px);
+	}
+}
+
+@keyframes LetterAnimation {
+	0% {
+		background-position: 50% 0;
+	}
+	40% {
+		background-position: -100% 0;
+	}
+
+	100% {
+		background-position: -100% 0;
 	}
 }

@@ -1,0 +1,34 @@
+.tagsSection {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	justify-items: center;
+	align-items: center;
+}
+
+.tagContainerSection {
+	display: grid;
+	padding: 10px;
+	background: linear-gradient(135deg, #417a9b, #464646);
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: auto;
+	gap: 10px;
+	width: fit-content;
+	position: relative;
+	border-radius: 10px;
+	& li {
+		text-transform: capitalize;
+		width: fit-content;
+		padding: 4px;
+		border-radius: 5px;
+		background-color: #292929;
+	}
+
+	& h4 {
+		margin: 0;
+		position: absolute;
+		text-decoration: underline;
+		top: -25px;
+		right: 50%;
+		transform: translateX(50%);
+	}
+}

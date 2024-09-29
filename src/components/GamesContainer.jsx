@@ -3,6 +3,8 @@ import { GamesRow } from './Pseudo/GamesRow'
 import { reduceDuplicates, returnEveryResult } from '../functions/functions'
 import useGetPlatforms from '../hooks/usePlatform'
 import { searchLogos } from '../functions/componentsFunctions/containerFunctions'
+import { TagSection } from './Pseudo/TagSection'
+import '../styles/componentsStyles/tagSection.css'
 
 export function GamesContainer({ results }) {
 	const [dataInfo, setDataInfo] = useState([])
@@ -27,12 +29,28 @@ export function GamesContainer({ results }) {
 	}, [dataInfo])
 
 	return (
-		<ul className="gameContainer">
-			{dataInfo.length > 0 &&
-				dataInfo.map(function (game) {
-					const gameGeneral = game.at(0)
-					return <GamesRow gameInformation={game} key={gameGeneral.id} />
-				})}
-		</ul>
+		<>
+			<section className="tagsSection">
+				{/*
+				//! Finish this and make it clickeable like a filter 
+				<TagSection
+					tagsArray={reduceDuplicates({
+						array: dataInfo,
+						comparative: 'keywords',
+						selector: 'name',
+						initialArrayValue: undefined
+					})}
+					tagName="Keywords"
+				/> */}
+			</section>
+
+			<ul className="gameContainer">
+				{dataInfo.length > 0 &&
+					dataInfo.map(function (game) {
+						const gameGeneral = game.at(0)
+						return <GamesRow gameInformation={game} key={gameGeneral.id} />
+					})}
+			</ul>
+		</>
 	)
 }

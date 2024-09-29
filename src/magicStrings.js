@@ -1,7 +1,9 @@
 export const PORT = 5173
 export const FETCH_TIMEOUT_SECONDS = 5000
 export const ACCESS_TOKEN_NAME = 'ACCESS_TOKEN'
-export const MAXIMUM_FETCH_QUERIES = 3
+
+// this represent the number of games you want to search
+export const MAXIMUM_FETCH_QUERIES = 7
 
 export const FETCH_STATUS = {
 	IDLE: { status: 'Idle' },

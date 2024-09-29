@@ -34,18 +34,10 @@ export function SearchBar() {
 
 	return (
 		<>
-			<section>
-				<form className={`${isError ? 'main-form main-form-error' : 'main-form'}`} onSubmit={handleSubmit}>
-					<input type="text" placeholder="Search the game you preffer" />
-					<input type="submit" value="Search" />
-				</form>
-			</section>
-
-			<section className="tagsSection">
-				<div>
-					<p>section of tags loremupsuim</p>
-				</div>
-			</section>
+			<form className={`${isError ? 'main-form main-form-error' : 'main-form'}`} onSubmit={handleSubmit}>
+				<input type="text" placeholder="Search the game you preffer" />
+				<input type="submit" value="Search" />
+			</form>
 
 			{statusFetch === FETCH_STATUS.LOADING && <LoadingBar />}
 			{GamesValue?.length > 0 && <GamesContainer results={GamesValue} />}

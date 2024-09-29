@@ -1,6 +1,6 @@
-export function LoadingBar({ placeholder = 'Loading' }) {
+export function LoadingBar({ placeholder = 'Loading...' }) {
 	return (
-		<div>
+		<div className="LoadingBar">
 			<svg
 				width="24"
 				height="24"

@@ -4,6 +4,7 @@ import { GamesContext } from './hooks/gamesContext'
 import { FETCH_ACCESS_TOKEN } from './functions/APIPetitions'
 import { setSessionStorage } from './functions/functions'
 import { ACCESS_TOKEN_NAME } from './magicStrings'
+import { ReactLogo } from './assets/ReactLogo'
 
 function App() {
 	const { setSessionCookies, getSessionCookie } = useContext(GamesContext)
@@ -23,11 +24,23 @@ function App() {
 	return (
 		<>
 			<header className="header">
-				<h2 className="header-title">Title</h2>
-				<p className="header-description">Lorem, ipsum dolor.</p>
+				<h2 className="header-title">Game Searcher</h2>
+				<span className="header-description">
+					<p className="header-subtitle">
+						My first <strong className="header-strong">React</strong>
+						<ReactLogo />
+						proyect!
+					</p>
+					<p className="header-info">
+						Check out my{' '}
+						<a href="https://github.com/Aragon-Joaquin/Web-Search-Games" target="_blank">
+							Github
+						</a>{' '}
+						repository for new updates.
+					</p>
+				</span>
 			</header>
 
-			{/* //todo: make the component wait till the token is succesfully gathered */}
 			<main className="main">
 				<SearchBar />
 			</main>
